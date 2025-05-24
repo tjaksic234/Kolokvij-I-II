@@ -1,14 +1,8 @@
-name: cicd-demo
+name: demo
 on:
   push:
     branches:
       - '*'
-env:
-  OCI_CLI_USER: ${{ secrets.OCI_CLI_USER }}
-  OCI_CLI_TENANCY: ${{ secrets.OCI_CLI_TENANCY }}
-  OCI_CLI_FINGERPRINT: ${{ secrets.OCI_CLI_FINGERPRINT }}
-  OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_CLI_KEY_CONTENT }}
-  OCI_CLI_REGION: ${{ secrets.OCI_CLI_REGION }}
 jobs:
   build-job:
     name: Build Job
@@ -24,9 +18,8 @@ jobs:
       - name: Build with Maven
         run: ./mvnw clean package
       - name: Log into OCIR
-        uses: oracle-actions/login-ocir@v1.2.1
-        with:
-          auth_token: ${{ secrets.OCI_AUTH_TOKEN }}
+        run: |
+          echo "${{ secrets.OCI_AUTH_TOKEN }}" | docker login eu-frankfurt-1.ocir.io -u "frur454twuum/tjaksic22" --password-stdin
       - name: Docker Build
         run: |
           docker build -t eu-frankfurt-1.ocir.io/frur454twuum/kolokvij/hello-world-app:latest .
