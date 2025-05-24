@@ -19,7 +19,7 @@ jobs:
         run: ./mvnw clean package
       - name: Log into OCIR
         run: |
-          echo "${{ secrets.OCI_AUTH_TOKEN }}" | docker login eu-frankfurt-1.ocir.io -u "frur454twuum/tjaksic22" --password-stdin
+          echo "${{ secrets.OCI_AUTH_TOKEN }}" | docker login eu-frankfurt-1.ocir.io -u "frur454twuum/tjaksic22@unizd.hr" --password-stdin
       - name: Docker Build
         run: |
           docker build -t eu-frankfurt-1.ocir.io/frur454twuum/kolokvij/hello-world-app:latest .
